@@ -1,12 +1,10 @@
-# Your Name Here
+# Matthew Pikal 
 # UWYO COSC 1010
-# Submission Date
-# Lab XX
-# Lab Section:
+# Submission Date: 11/12/2024
+# Lab 09
+# Lab Section: 11
 # Sources, people worked with, help given to:
-# Your
-# Comments
-# Here
+
 
 # Classes
 # For this assignment, you will be creating two classes:
@@ -35,6 +33,25 @@
 # - Assign the parameter for sauce to the attribute.
 # - Create the toppings attribute, starting off as a list only holding cheese.
 
+class Pizza:
+    """Pizza"""
+    def __init__(self, size, toppings, sauce='red', ):
+        self.size = size 
+        self.sauce = sauce 
+        self.toppings = ['cheese']
+        if 'cheese' in toppings:
+            toppings.remove('cheese')
+        for topping in toppings:
+            self.toppings.append(topping)
+        try:
+            if size.isdigit() and int(size) > 10:
+                size = int(size)
+            else:
+                size = 10
+        except:
+            size = size
+    def amount_toppings(self):
+        return len(self.toppings)
 
 # You will be creating a Pizzeria class with the following attributes:
 # - orders, the number of orders placed. Should start at 0.
@@ -78,6 +95,35 @@
 # - After the order is placed, call the getReceipt() method.
 # - Repeat the loop as needed.
 # - AFTER the loop, print how many orders were placed.
+class Pizzeria:
+    def __init__(self, pizzas=[], orders=0, price_per_topping=0.30, price_per_inch=0.60):
+        self.pizzas =[]
+        self.orders = orders
+        self.price_per_topping = price_per_topping
+        self.price_per_inch = price_per_inch
+        for pizza in pizzas:
+            self.pizzas.append(pizza)
+    def place_order(self):
+        self.orders += 1
+        size = input("Please enter a size for your pizza")
+        sauce = input("Please enter the sauce you want (if nothing is entered your sauce will be red sauce)")
+        message = ''
+        toppings = []
+        pizza = Pizza(size,toppings,sauce)
+        self.pizzas.append(pizza)
+        while True:
+            message = input('Please enter the toppings you want and enter "exit" when you are finished')
+            if message == 'exit':
+                break
+            else:
+                toppings.append(message)
+wow = Pizzeria()
+wow.place_order()
+print(wow.pizzas)
+
+
+        
+        
 
 
 # Example output:
