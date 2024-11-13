@@ -36,22 +36,26 @@
 class Pizza:
     """Pizza"""
     def __init__(self, size, toppings, sauce='red', ):
-        self.size = size 
+        
         self.sauce = sauce 
         self.toppings = ['cheese']
         if 'cheese' in toppings:
-            toppings.remove('cheese')
+            self.toppings.remove('cheese')
         for topping in toppings:
             self.toppings.append(topping)
         try:
             if size.isdigit() and int(size) > 10:
-                size = int(size)
+                self.size = int(size)
             else:
-                size = 10
+                self.size = 10
         except:
-            size = size
+            self.size = 10
     def amount_toppings(self):
         return len(self.toppings)
+    def get_size(self):
+        return self.size
+
+    
 
 # You will be creating a Pizzeria class with the following attributes:
 # - orders, the number of orders placed. Should start at 0.
@@ -88,13 +92,7 @@ class Pizza:
 #   - This will simply return the number of orders.
 
 
-# - Declare your pizzeria object.
-# - Enter a while loop to ask if the user wants to order a pizza.
-# - Exit on the word `exit`.
-# - Call the placeOrder() method with your class instance.
-# - After the order is placed, call the getReceipt() method.
-# - Repeat the loop as needed.
-# - AFTER the loop, print how many orders were placed.
+
 class Pizzeria:
     def __init__(self, pizzas=[], orders=0, price_per_topping=0.30, price_per_inch=0.60):
         self.pizzas =[]
@@ -109,17 +107,46 @@ class Pizzeria:
         sauce = input("Please enter the sauce you want (if nothing is entered your sauce will be red sauce)")
         message = ''
         toppings = []
-        pizza = Pizza(size,toppings,sauce)
-        self.pizzas.append(pizza)
         while True:
-            message = input('Please enter the toppings you want and enter "exit" when you are finished')
+            message = input('Please enter the toppings you want one at a time and enter "exit" when you are finished')
             if message == 'exit':
                 break
             else:
                 toppings.append(message)
-wow = Pizzeria()
-wow.place_order()
-print(wow.pizzas)
+        
+        pizza = Pizza(size,toppings,sauce)
+        self.pizzas.append(pizza)
+        print(toppings)
+    def get_price(self):
+        user_pizza = self.pizzas[-1]
+        price = (user_pizza.size * self.price_per_inch) + (user_pizza.amount_toppings() * self.price_per_topping)
+        return price
+    def get_receipt(self):
+        user_pizza = self.pizzas[-1]
+    
+        print(f'Pizza is {user_pizza.size}" has {user_pizza.sauce} sauce and has: {user_pizza.toppings[:len(user_pizza.toppings)]}')
+        toppings_price = (user_pizza.amount_toppings() * self.price_per_topping)
+        size_price = ((user_pizza.get_size()) * self.price_per_inch)
+        print(f'Price for {user_pizza.get_size()}" is ${size_price}')
+        print(f'Price for toppings is ${toppings_price}')
+        total_price = toppings_price + size_price
+        print(f'Total price of pizza is ${total_price}')
+# - Declare your pizzeria object.
+# - Enter a while loop to ask if the user wants to order a pizza.
+# - Exit on the word `exit`.
+# - Call the placeOrder() method with your class instance.
+# - After the order is placed, call the getReceipt() method.
+# - Repeat the loop as needed.
+# - AFTER the loop, print how many orders were placed.
+my_pizzeria = Pizzeria()
+while True:
+    would_you=input('Would you like to order a pizza? Enter "exit" to stop')
+    if would_you=='exit':
+        break
+    else:
+        my_pizzeria.place_order()
+        my_pizzeria.get_receipt()
+print(my_pizzeria.orders)
 
 
         
